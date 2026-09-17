@@ -20,6 +20,9 @@
 
   const introCard = document.querySelector('.stage-card[data-stage="0"]');
   const introGrid = introCard?.querySelector('.form-grid');
+  const introSubtitle = introCard?.querySelector('.stage-heading span');
+  if (introSubtitle) introSubtitle.textContent = 'Optional image / text opening';
+
   if (introCard && introGrid) {
     const uploader = document.createElement('label');
     uploader.className = 'drop-zone';
@@ -77,11 +80,16 @@
   const originalSerializable = serializable;
   serializable = function() {
     const data = originalSerializable();
-    data.sections = data.sections.map((saved, i) => ({
-      ...saved,
-      introImageName: sections[i]?.introImageName || '',
-      fit1: sections[i]?.fit1 || 'cover'
-    }));
+    data.sections = data.sections.map((saved, i) => {
+      const clean = {
+        ...saved,
+        introImageName: sections[i]?.introImageName || '',
+        fit1: sections[i]?.fit1 || 'cover'
+      };
+      delete clean.introImage;
+      delete clean.introImageUrl;
+      return clean;
+    });
     return data;
   };
 
@@ -104,6 +112,16 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     drawText({ ...s, textPosition: 'center' }, true);
+  };
+
+  // Hide the empty-state message even when only the intro image is present.
+  const originalRenderAtTime = renderAtTime;
+  renderAtTime = function(t) {
+    originalRenderAtTime(t);
+    const hint = document.getElementById('emptyHint');
+    if (hint && sections.some(s => s.introImageUrl || s.image2Url || s.image3Url)) {
+      hint.style.display = 'none';
+    }
   };
 
   // Free the intro image URL when a character is deleted.
