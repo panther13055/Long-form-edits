@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Longform Studio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-row">
+        <div class="logo">LF</div>
+        <div>
+          <h1>Longform Studio</h1>
+          <p>Character reveal video builder</p>
+        </div>
+      </div>
+
+      <div class="sidebar-actions">
+        <button id="addSectionBtn" class="btn primary">+ Add Character</button>
+        <button id="duplicateSectionBtn" class="btn ghost">Duplicate Selected</button>
+      </div>
+
+      <div class="section-counter"><span id="sectionCount">1</span> / 15 characters</div>
+      <div id="sectionList" class="section-list"></div>
+
+      <div class="audio-panel panel-mini">
+        <h3>Global Audio</h3>
+        <label class="file-field">
+          <span>Background music</span>
+          <input id="musicInput" type="file" accept="audio/*" />
+        </label>
+        <label class="range-field">
+          <span>Music volume <b id="musicVolumeLabel">65%</b></span>
+          <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.65" />
+        </label>
+        <button id="clearMusicBtn" class="btn tiny ghost">Clear music</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">LONG-FORM EDITOR</span>
+          <h2 id="activeTitle">Character 01</h2>
+        </div>
+        <div class="top-actions">
+          <button id="saveProjectBtn" class="btn ghost">Save Project</button>
+          <label class="btn ghost upload-project">Load Project<input id="loadProjectInput" type="file" accept="application/json" /></label>
+          <button id="exportBtn" class="btn accent">Export WebM</button>
+        </div>
+      </header>
+
+      <section class="layout-grid">
+        <div class="editor-column">
+          <div class="panel character-meta">
+            <div class="panel-heading">
+              <div>
+                <span class="step-tag">CHARACTER DETAILS</span>
+                <h3>Shared name & style</h3>
+              </div>
+              <button id="deleteSectionBtn" class="icon-btn danger" title="Delete character">Delete</button>
+            </div>
+            <div class="form-grid two-col">
+              <label>Character / label
+                <input id="characterName" type="text" placeholder="e.g. Mordecai" />
+              </label>
+              <label>Subtitle / extra text
+                <input id="characterSubtitle" type="text" placeholder="e.g. In Real Life" />
+              </label>
+              <label>Text color
+                <input id="textColor" type="color" value="#ffffff" />
+              </label>
+              <label>Accent color
+                <input id="accentColor" type="color" value="#7c5cff" />
+              </label>
+              <label>Text style
+                <select id="textStyle">
+                  <option value="cinematic">Cinematic</option>
+                  <option value="neon">Neon</option>
+                  <option value="comic">Comic Pop</option>
+                  <option value="minimal">Minimal</option>
+                  <option value="retro">Retro</option>
+                </select>
+              </label>
+              <label>Text position
+                <select id="textPosition">
+                  <option value="bottom">Bottom</option>
+                  <option value="center">Center</option>
+                  <option value="top">Top</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="stage-grid">
+            <article class="panel stage-card" data-stage="0">
+              <div class="stage-number">01</div>
+              <div class="stage-heading"><h3>Intro / Blank Card</h3><span>Text-only opening</span></div>
+              <label>Intro text
+                <textarea id="introText" rows="3" placeholder="WHO WOULD THIS CHARACTER BE IN REAL LIFE?"></textarea>
+              </label>
+              <div class="form-grid two-col compact">
+                <label>Background
+                  <input id="introBg" type="color" value="#0b0d14" />
+                </label>
+                <label>Duration (sec)
+                  <input id="duration1" type="number" min="0.5" max="30" step="0.5" value="2.5" />
+                </label>
+                <label>Transition to image 2
+                  <select id="transition1">
+                    <option value="fade">Fade</option>
+                    <option value="slide-left">Slide Left</option>
+                    <option value="zoom">Zoom</option>
+                    <option value="wipe">Wipe</option>
+                    <option value="flash">Flash</option>
+                  </select>
+                </label>
+                <label>Transition (sec)
+                  <input id="transitionDuration1" type="number" min="0.2" max="3" step="0.1" value="0.8" />
+                </label>
+              </div>
+            </article>
+
+            <article class="panel stage-card" data-stage="1">
+              <div class="stage-number">02</div>
+              <div class="stage-heading"><h3>Original / Cartoon</h3><span>Your source character image</span></div>
+              <label class="drop-zone" id="drop2">
+                <input id="image2" type="file" accept="image/*" />
+                <div class="drop-preview" id="preview2"><span>Drop image or click to upload</span></div>
+              </label>
+              <div class="form-grid two-col compact">
+                <label>Fit
+                  <select id="fit2"><option value="cover">Cover</option><option value="contain">Contain</option></select>
+                </label>
+                <label>Duration (sec)
+                  <input id="duration2" type="number" min="0.5" max="30" step="0.5" value="3" />
+                </label>
+                <label>Transition to image 3
+                  <select id="transition2">
+                    <option value="fade">Fade</option>
+                    <option value="slide-left">Slide Left</option>
+                    <option value="zoom">Zoom</option>
+                    <option value="wipe">Wipe</option>
+                    <option value="flash">Flash</option>
+                  </select>
+                </label>
+                <label>Transition (sec)
+                  <input id="transitionDuration2" type="number" min="0.2" max="3" step="0.1" value="0.8" />
+                </label>
+              </div>
+            </article>
+
+            <article class="panel stage-card" data-stage="2">
+              <div class="stage-number">03</div>
+              <div class="stage-heading"><h3>Reveal / Final Image</h3><span>Transformed / IRL result</span></div>
+              <label class="drop-zone" id="drop3">
+                <input id="image3" type="file" accept="image/*" />
+                <div class="drop-preview" id="preview3"><span>Drop image or click to upload</span></div>
+              </label>
+              <div class="form-grid two-col compact">
+                <label>Fit
+                  <select id="fit3"><option value="cover">Cover</option><option value="contain">Contain</option></select>
+                </label>
+                <label>Duration (sec)
+                  <input id="duration3" type="number" min="0.5" max="30" step="0.5" value="4" />
+                </label>
+                <label>SFX on reveal
+                  <input id="sfxInput" type="file" accept="audio/*" />
+                </label>
+                <label>SFX volume
+                  <input id="sfxVolume" type="range" min="0" max="1" step="0.05" value="0.8" />
+                </label>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <aside class="preview-column">
+          <div class="preview-sticky">
+            <div class="preview-toolbar">
+              <div>
+                <span class="step-tag">LIVE PREVIEW</span>
+                <strong>16:9 • 1920×1080</strong>
+              </div>
+              <select id="previewQuality"><option value="960">Fast Preview</option><option value="1280">HD Preview</option></select>
+            </div>
+            <div class="canvas-wrap">
+              <canvas id="previewCanvas" width="960" height="540"></canvas>
+              <div id="emptyHint" class="empty-hint">Add images to see your reveal</div>
+            </div>
+            <div class="transport">
+              <button id="prevFrameBtn" class="transport-btn">◀</button>
+              <button id="playBtn" class="transport-btn play">▶ Preview</button>
+              <button id="nextFrameBtn" class="transport-btn">▶</button>
+            </div>
+            <div class="progress-row"><span id="timeLabel">00:00 / 00:00</span><input id="timeline" type="range" min="0" max="1" step="0.001" value="0" /></div>
+            <div class="summary-box">
+              <div><span>Characters</span><b id="summaryCharacters">1</b></div>
+              <div><span>Total scenes</span><b id="summaryScenes">3</b></div>
+              <div><span>Est. duration</span><b id="summaryDuration">00:10</b></div>
+            </div>
+            <div class="tip-box"><strong>Flow:</strong> Intro card → original image → reveal image → next character.</div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
