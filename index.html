@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Longform Studio</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="export-quality.css" />
 </head>
 <body>
   <div class="app-shell">
@@ -48,7 +49,7 @@
         <div class="top-actions">
           <button id="saveProjectBtn" class="btn ghost">Save Project</button>
           <label class="btn ghost upload-project">Load Project<input id="loadProjectInput" type="file" accept="application/json" /></label>
-          <button id="exportBtn" class="btn accent">Export WebM</button>
+          <button id="exportBtn" class="btn accent">Download Video</button>
         </div>
       </header>
 
@@ -211,5 +212,6 @@
   <div id="toast" class="toast"></div>
   <script src="app.js"></script>
   <script src="intro-image.js"></script>
+  <script src="export-quality.js"></script>
 </body>
 </html>
